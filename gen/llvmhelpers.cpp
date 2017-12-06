@@ -1345,6 +1345,7 @@ size_t getMemberSize(Type *type) {
   }
 
   const uint64_t llSize = gDataLayout->getTypeAllocSize(llType);
+  printf("D type: %s, LLVM type: %d", type->toChars(), llType->getTypeID());
   assert(llSize <= dSize &&
          "LLVM type is bigger than the corresponding D type, "
          "might lead to aggregate layout mismatch.");

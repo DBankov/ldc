@@ -13,9 +13,11 @@
 #include "gen/abi-generic.h"
 #include "gen/abi-aarch64.h"
 #include "gen/abi-arm.h"
+#include "gen/abi-asmjs.h"
 #include "gen/abi-mips64.h"
 #include "gen/abi-ppc.h"
 #include "gen/abi-ppc64le.h"
+#include "gen/abi-wasm.h"
 #include "gen/abi-win64.h"
 #include "gen/abi-x86-64.h"
 #include "gen/abi-x86.h"
@@ -331,6 +333,11 @@ TargetABI *TargetABI::getTarget() {
   case llvm::Triple::thumb:
   case llvm::Triple::thumbeb:
     return getArmTargetABI();
+  case llvm::Triple::asmjs:
+    return getAsmJSTargetABI();
+  case llvm::Triple::wasm32:
+  case llvm::Triple::wasm64:
+    return getWasmTargetABI(global.params.targetTriple->isArch64Bit());
   default:
     Logger::cout() << "WARNING: Unknown ABI, guessing...\n";
     return new UnknownTargetABI;

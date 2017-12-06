@@ -778,6 +778,15 @@ void registerPredefinedTargetVersions() {
         "S390X"); // For backwards compatibility.
     VersionCondition::addPredefinedGlobalIdent("D_HardFloat");
     break;
+  case llvm::Triple::asmjs:
+    VersionCondition::addPredefinedGlobalIdent("X86");
+    VersionCondition::addPredefinedGlobalIdent("AsmJS");
+    break;
+  case llvm::Triple::wasm32:
+  case llvm::Triple::wasm64:
+    VersionCondition::addPredefinedGlobalIdent("X86");
+    VersionCondition::addPredefinedGlobalIdent("WebAssembly");
+    break;
   default:
     error(Loc(), "invalid cpu architecture specified: %s",
           global.params.targetTriple->getArchName().str().c_str());
@@ -879,6 +888,11 @@ void registerPredefinedTargetVersions() {
   case llvm::Triple::AIX:
     VersionCondition::addPredefinedGlobalIdent("AIX");
     VersionCondition::addPredefinedGlobalIdent("Posix");
+    break;
+  case llvm::Triple::Emscripten:
+    VersionCondition::addPredefinedGlobalIdent("Emscripten");
+    VersionCondition::addPredefinedGlobalIdent("Posix");
+    VersionCondition::addPredefinedGlobalIdent("CRuntime_Musl");
     break;
   case llvm::Triple::UnknownOS:
     if (arch == llvm::Triple::msp430)
